@@ -1,8 +1,10 @@
+// external imports
 const express = require("express");
 const passport = require("passport");
+require("dotenv").config();
 
-const CLIENT_URL = "http://localhost:3000/home";
-const CLIENT_LOGIN_URL = "http://localhost:3000/login";
+const CLIENT_URL = `${process.env.FRONTEND_URL}/home`;
+const CLIENT_LOGIN_URL = `${process.env.FRONTEND_URL}/login`;
 
 const router = express.Router();
 
@@ -31,6 +33,18 @@ router.get("/logout", (req, res) => {
 router.get(
   "/google/callback",
   passport.authenticate("google", {
+    successRedirect: CLIENT_URL,
+    failureRedirect: "/login/failed",
+  })
+);
+
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", { scope: ["profile"] })
+);
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
     successRedirect: CLIENT_URL,
     failureRedirect: "/login/failed",
   })
