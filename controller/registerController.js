@@ -14,9 +14,7 @@ async function addUser(req, res, next) {
     newUser = new User({ ...req.body, password: hashedPassword });
 
     // save user
-    console.log("newuser", newUser);
-    const user = await newUser.save();
-    console.log(user);
+    await newUser.save();
     res.status(200).json({
       toast: "success",
       message: "User added successfully!",
