@@ -30,7 +30,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(
-  cookieSession({ name: "session", keys: ["assessment"], maxAge: "86400000" })
+  cookieSession({
+    name: process.env.COOKIE_NAME,
+    keys: [process.env.COOKIE_SECRET],
+    maxAge: process.env.JWT_EXPIRY,
+  })
 );
 
 app.use(passport.initialize());

@@ -12,7 +12,6 @@ require("dotenv").config();
 
 // urls
 const CLIENT_URL = `${process.env.FRONTEND_URL}/home`;
-const CLIENT_LOGIN_URL = `${process.env.FRONTEND_URL}/login`;
 
 const router = express.Router();
 

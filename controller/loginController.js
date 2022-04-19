@@ -1,7 +1,6 @@
 // external imports
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-const passport = require("passport");
 const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 
@@ -9,15 +8,15 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/People");
 
 // urls
-const CLIENT_URL = `${process.env.FRONTEND_URL}/home`;
 const CLIENT_LOGIN_URL = `${process.env.FRONTEND_URL}/login`;
 
 // google success login
 async function googleSuccessLogin(req, res, next) {
   if (req.user) {
     res.status(200).json({
+      toast: "success",
       success: true,
-      message: "success",
+      message: "successfully logged in",
       user: req.user,
     });
   }
@@ -94,7 +93,6 @@ async function login(req, res, next) {
 
 // logout
 async function logout(req, res) {
-  req.logout();
   res.clearCookie(process.env.COOKIE_NAME);
   res.status(200).redirect(CLIENT_LOGIN_URL);
 }
