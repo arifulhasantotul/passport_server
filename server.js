@@ -6,10 +6,28 @@ const passport = require("passport");
 const cors = require("cors");
 const passportSetup = require("./passport");
 const authRoute = require("./routes/auth");
+const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 // initialization
 const app = express();
 const port = process.env.PORT || 5000;
+
+// database connection
+mongoose
+  .connect(process.env.MONGOS_CONNECTION_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("mongoose connection successful!"))
+  .catch((err) => console.log(err));
+
+// request parsers
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// parse cookies
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.use(
   cookieSession({ name: "session", keys: ["assessment"], maxAge: "86400000" })

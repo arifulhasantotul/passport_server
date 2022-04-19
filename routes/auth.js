@@ -1,12 +1,15 @@
 // external imports
 const express = require("express");
 const passport = require("passport");
+const { addUser } = require("../controller/registerController");
 require("dotenv").config();
 
 const CLIENT_URL = `${process.env.FRONTEND_URL}/home`;
 const CLIENT_LOGIN_URL = `${process.env.FRONTEND_URL}/login`;
 
 const router = express.Router();
+
+router.post("/register", addUser);
 
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
